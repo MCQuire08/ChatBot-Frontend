@@ -17,3 +17,27 @@ export const getConversations = async (userId) => {
     throw error;
   }
 };
+
+export const sendMessage = async (conversationId, content, sender) => {
+  try {
+    const response = await axios.post(
+      API_ROUTES.messages,
+      {
+        conversationId,
+        content,
+        sender
+      },
+      {
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Error sending message:', error);
+    throw error;
+  }
+};
