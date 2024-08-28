@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getConversations, sendMessage } from '../../services/chatBotService';
+import { getConversations, sendMessage,cleanConversation } from '../../services/chatBotService';
 
 export default function ChatBot({ userId }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,6 +61,18 @@ export default function ChatBot({ userId }) {
     }
   };
 
+  const handleClearChat = async () => {
+    if (activeConversationId) {
+      try {
+        await cleanConversation(activeConversationId);
+        setMessages([]);
+        setActiveConversationId(null);
+      } catch (error) {
+        console.error('Error cleaning conversation:', error);
+      }
+    }
+  };
+
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -72,8 +84,17 @@ export default function ChatBot({ userId }) {
     <div className="relative">
       {isOpen && (
         <div className="fixed bottom-0 right-0 mr-4 bg-white border border-[#e5e7eb] w-[440px] h-[634px] flex flex-col z-50 mb-24">
-          <div className="flex flex-col space-y-1.5 p-6 border-b">
-            <h2 className="font-semibold text-lg tracking-tight">ChatBot</h2>
+          <div className="flex justify-between items-center p-6 border-b">
+            <div className="flex items-center space-x-2 flex-1">
+              <h2 className="font-semibold text-lg tracking-tight flex-1 text-center">ChatBot</h2>
+              <button onClick={handleClearChat} className="text-red-600 hover:text-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
+                  <path d="M17,22H7c-1.657,0-3-1.343-3-3V6h16v13C20,20.657,18.657,22,17,22z" opacity=".35"></path>
+                  <path d="M16,4H8V3c0-0.552,0.448-1,1-1h6c0.552,0,1,0.448,1,1V4z"></path>
+                  <path d="M19,3C18.399,3,5.601,3,5,3C3.895,3,3,3.895,3,5c0,1.105,0.895,2,2,2c0.601,0,13.399,0,14,0c1.105,0,2-0.895,2-2 C21,3.895,20.105,3,19,3z"></path>
+                </svg>
+              </button>
+            </div>
           </div>
 
           <div className="flex-1 overflow-y-auto p-4" style={{ maxHeight: 'calc(100% - 60px)' }}>

@@ -41,3 +41,25 @@ export const sendMessage = async (conversationId, content, sender) => {
     throw error;
   }
 };
+
+export const cleanConversation = async (conversationId) => {
+  try {
+    const response = await axios.delete(
+      API_ROUTES.conversations+'/clean',
+      {
+        conversationId
+      },
+      {
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Error sending message:', error);
+    throw error;
+  }
+};
