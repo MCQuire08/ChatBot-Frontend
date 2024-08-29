@@ -19,11 +19,34 @@ export default function ResponseTable() {
     }, []);
 
     const handleDelete = async (id) => {
-        try {
-            await deleteResponse(id);
-            setResponses(responses.filter(response => response.id !== id));
-        } catch (error) {
-            console.error('Error deleting response:', error);
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                await deleteResponse(id);
+                setResponses(responses.filter(response => response.id !== id));
+                Swal.fire(
+                    'Eliminado!',
+                    'La respuesta ha sido eliminada.',
+                    'success'
+                );
+            } catch (error) {
+                Swal.fire(
+                    'Error!',
+                    'Hubo un problema al eliminar la respuesta.',
+                    'error'
+                );
+                console.error('Error deleting response:', error);
+            }
         }
     };
 

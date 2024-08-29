@@ -4,5 +4,6 @@ export const API_ROUTES = {
   conversations: `${API_BASE_URL}/chatBot/conversations`,
   messages:`${API_BASE_URL}/chatBot/messages`,
   responses:`${API_BASE_URL}/responses`,
-  auth:`${API_BASE_URL}/login`
+  auth:`${API_BASE_URL}/login`,
+  products:`${API_BASE_URL}/product`,
 };
