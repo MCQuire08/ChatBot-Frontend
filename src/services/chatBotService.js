@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { API_ROUTES } from '../utils/apiRoutes.js';
+import api from '../utils/api.js';
 
 export const getConversations = async (userId) => {
   try {
-    const response = await axios.get(API_ROUTES.conversations, {
+    const response = await api.get(API_ROUTES.conversations, {
       params: { userId },
       headers: {
         'Accept': '*/*',
@@ -20,7 +20,7 @@ export const getConversations = async (userId) => {
 
 export const sendMessage = async (conversationId, content, sender) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       API_ROUTES.messages,
       {
         conversationId,
@@ -44,12 +44,10 @@ export const sendMessage = async (conversationId, content, sender) => {
 
 export const cleanConversation = async (conversationId) => {
   try {
-    const response = await axios.delete(
-      API_ROUTES.conversations+'/clean',
+    const response = await api.delete(
+      `${API_ROUTES.conversations}/clean`,
       {
-        conversationId
-      },
-      {
+        data: { conversationId },
         headers: {
           'Accept': '*/*',
           'Content-Type': 'application/json',
@@ -59,7 +57,7 @@ export const cleanConversation = async (conversationId) => {
 
     return response.data;
   } catch (error) {
-    console.error('Error sending message:', error);
+    console.error('Error cleaning conversation:', error);
     throw error;
   }
 };

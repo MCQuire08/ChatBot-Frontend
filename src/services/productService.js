@@ -1,9 +1,9 @@
-import axios from 'axios';
+import api from '../utils/api.js';
 import { API_ROUTES } from '../utils/apiRoutes.js';
 
 export const getAllProducts = async () => {
   try {
-    const response = await axios.get(API_ROUTES.products, {
+    const response = await api.get(API_ROUTES.products, {
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export const getAllProducts = async () => {
 
 export const createProduct = async (name, description, price, category, stock) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       API_ROUTES.products,
       { name, description, price, category, stock },
       {
@@ -39,7 +39,7 @@ export const createProduct = async (name, description, price, category, stock) =
 
 export const deleteProduct = async (id) => {
   try {
-    const response = await axios.delete(`${API_ROUTES.products}/${id}`, {
+    const response = await api.delete(`${API_ROUTES.products}/${id}`, {
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json',

@@ -1,9 +1,9 @@
-import axios from 'axios';
+import api from '../utils/api.js'
 import { API_ROUTES } from '../utils/apiRoutes.js';
 
 export const getAllResponses = async () => {
   try {
-    const response = await axios.get(API_ROUTES.responses, {
+    const response = await api.get(API_ROUTES.responses, {
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export const getAllResponses = async () => {
 
 export const createResponse = async (trigger, reply) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       API_ROUTES.responses,
       { trigger, reply },
       {
@@ -39,7 +39,7 @@ export const createResponse = async (trigger, reply) => {
 
 export const deleteResponse = async (id) => {
   try {
-    const response = await axios.delete(`${API_ROUTES.responses}/${id}`, {
+    const response = await api.delete(`${API_ROUTES.responses}/${id}`, {
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json',
